@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Gecko extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'code_name',
+        'morph',
+        'gender',
+        'age',
+        'feeding',
+        'dob',
+        'defect',
+        'description',
+        'price',
+        'status',
+        'image',
+        'images',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
+}
