@@ -22,9 +22,11 @@ class Gecko extends Model
         'status',
         'image',
         'images',
+        'is_featured',
     ];
 
     protected $casts = [
         'images' => 'array',
+        'is_featured' => 'boolean',
     ];
 }

@@ -36,7 +36,7 @@
         </div>
         @endif
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
                 <span class="text-xs font-medium text-slate-500">Total Gecko</span>
                 <span class="block text-2xl font-bold text-slate-900 mt-1">{{ $totalGecko }}</span>
@@ -49,12 +49,16 @@
                 <span class="text-xs font-medium text-slate-500">Terjual</span>
                 <span class="block text-2xl font-bold text-slate-400 mt-1">{{ $terjual }}</span>
             </div>
+            <div class="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
+                <span class="text-xs font-medium text-slate-500">Tampil di Landing Page</span>
+                <span class="block text-2xl font-bold text-emerald-600 mt-1">{{ $featuredCount ?? 0 }}</span>
+            </div>
         </div>
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
                 <h1 class="text-xl font-bold text-slate-900">Kelola Data Gecko</h1>
-                <p class="text-xs text-slate-500 mt-0.5">Manajemen inventaris, foto galeri, dan kelengkapan data.</p>
+                <p class="text-xs text-slate-500 mt-0.5">Manajemen inventaris, foto galeri, dan pilih produk yang tampil di landing page.</p>
             </div>
             <button onclick="openModal('addModal')" class="px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs transition flex items-center justify-center gap-2 shadow-sm">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -73,6 +77,7 @@
                             <th class="p-4">Kondisi / DOB</th>
                             <th class="p-4">Harga</th>
                             <th class="p-4">Status</th>
+                            <th class="p-4 text-center">Tampil Landing</th>
                             <th class="p-4 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -101,6 +106,26 @@
                             </td>
                             <td class="p-4 text-center">
                                 <div class="flex items-center justify-center gap-2">
+                                    @if($gecko->is_featured)
+                                        <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                            ✓ Tampil
+                                        </span>
+                                    @else
+                                        <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-400 border border-slate-200">
+                                            Katalog
+                                        </span>
+                                    @endif
+                                    <form action="{{ route('admin.geckos.toggleFeatured', $gecko->id) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="px-2.5 py-1 rounded-lg text-[10px] font-bold transition {{ $gecko->is_featured ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm' }}" title="{{ $gecko->is_featured ? 'Sembunyikan dari Landing Page' : 'Tampilkan di Landing Page' }}">
+                                            {{ $gecko->is_featured ? 'Sembunyikan' : '+ Tampilkan' }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="p-4 text-center">
+                                <div class="flex items-center justify-center gap-2">
                                     <a href="{{ route('gecko.show', $gecko->id) }}" target="_blank" class="px-2.5 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition">
                                         Preview
                                     </a>
@@ -119,7 +144,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="p-8 text-center text-slate-400">Belum ada data gecko. Silakan tambah data baru.</td>
+                            <td colspan="7" class="p-8 text-center text-slate-400">Belum ada data gecko. Silakan tambah data baru.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -207,6 +232,17 @@
                     <label class="block font-medium text-slate-600 mb-1">Galeri Foto Tambahan (Bisa Upload Banyak Foto)</label>
                     <input type="file" name="images[]" accept="image/*" multiple class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 text-xs focus:outline-none focus:border-slate-900">
                     <p class="text-[10px] text-slate-400 mt-1">Pilih beberapa foto sekaligus dari PC untuk ditampilkan di halaman detail.</p>
+                </div>
+
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="block font-bold text-slate-800 text-xs">Tampilkan di Landing Page?</span>
+                        <span class="text-[10px] text-slate-400">Jadikan gecko ini sebagai preview etalase di halaman utama.</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_featured" value="1" class="sr-only peer">
+                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                    </label>
                 </div>
 
                 <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
@@ -400,6 +436,17 @@
                     <input type="file" name="images[]" accept="image/*" multiple class="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-900 text-xs focus:outline-none focus:border-slate-900">
                 </div>
 
+                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="block font-bold text-slate-800 text-xs">Tampilkan di Landing Page?</span>
+                        <span class="text-[10px] text-slate-400">Jadikan gecko ini sebagai preview etalase di halaman utama.</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="edit_is_featured" name="is_featured" value="1" class="sr-only peer">
+                        <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                    </label>
+                </div>
+
                 <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
                     <button type="button" onclick="closeModal('editModal')" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium">Batal</button>
                     <button type="submit" class="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-medium">Update Data</button>
@@ -429,6 +476,7 @@
             document.getElementById('edit_price').value = gecko.price;
             document.getElementById('edit_status').value = gecko.status;
             document.getElementById('edit_description').value = gecko.description || '';
+            document.getElementById('edit_is_featured').checked = Boolean(gecko.is_featured);
             openModal('editModal');
         }
     </script>

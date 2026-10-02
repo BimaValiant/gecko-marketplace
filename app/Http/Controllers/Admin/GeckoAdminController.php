@@ -59,9 +59,10 @@ class GeckoAdminController extends Controller
         $totalGecko = $geckos->count();
         $readyStock = $geckos->where('status', 'READY STOCK')->count();
         $terjual = $geckos->where('status', 'TERJUAL')->count();
+        $featuredCount = $geckos->where('is_featured', true)->count();
         $testimonials = Testimonial::latest()->get();
 
-        return view('admin', compact('geckos', 'totalGecko', 'readyStock', 'terjual', 'testimonials'));
+        return view('admin', compact('geckos', 'totalGecko', 'readyStock', 'terjual', 'featuredCount', 'testimonials'));
     }
 
     public function store(Request $request)
@@ -82,6 +83,7 @@ class GeckoAdminController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_featured'] = $request->has('is_featured');
 
         // Upload Sampul Utama
         if ($request->hasFile('image')) {
@@ -120,6 +122,7 @@ class GeckoAdminController extends Controller
         ]);
 
         $data = $request->all();
+        $data['is_featured'] = $request->has('is_featured');
 
         // Update Sampul Utama jika ada file baru
         if ($request->hasFile('image')) {
@@ -152,6 +155,16 @@ class GeckoAdminController extends Controller
         $gecko->update($data);
 
         return redirect()->route('admin.index')->with('success', 'Data Gecko berhasil diperbarui!');
+    }
+
+    // Toggle Tampil di Landing Page
+    public function toggleFeatured(Gecko $gecko)
+    {
+        $gecko->is_featured = !$gecko->is_featured;
+        $gecko->save();
+
+        $statusMsg = $gecko->is_featured ? 'ditampilkan di Landing Page!' : 'disembunyikan dari Landing Page.';
+        return back()->with('success', 'Gecko ' . $gecko->code_name . ' (' . $gecko->morph . ') berhasil ' . $statusMsg);
     }
 
     public function destroy(Gecko $gecko)

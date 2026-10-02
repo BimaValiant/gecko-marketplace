@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\GeckoAdminController;
 
 // Public Routes
 Route::get('/', [GeckoController::class, 'index'])->name('landing');
+Route::get('/katalog', [GeckoController::class, 'catalog'])->name('katalog');
 Route::get('/gecko/{gecko}', [GeckoController::class, 'show'])->name('gecko.show');
 
 // Route Kirim Testimoni Publik dari User
@@ -21,6 +22,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/', [GeckoAdminController::class, 'index'])->name('index');
     Route::post('/geckos', [GeckoAdminController::class, 'store'])->name('store');
     Route::put('/geckos/{gecko}', [GeckoAdminController::class, 'update'])->name('update');
+    Route::patch('/geckos/{gecko}/toggle-featured', [GeckoAdminController::class, 'toggleFeatured'])->name('geckos.toggleFeatured');
     Route::delete('/geckos/{gecko}', [GeckoAdminController::class, 'destroy'])->name('destroy');
     
     // Testimonial Admin Routes

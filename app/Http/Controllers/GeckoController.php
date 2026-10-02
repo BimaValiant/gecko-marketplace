@@ -10,10 +10,8 @@ class GeckoController extends Controller
 {
     private $phoneAdmin = "6285923568144";
 
-    public function index()
+    private function attachWaLinks($geckos)
     {
-        $geckos = Gecko::latest()->get();
-
         foreach ($geckos as $gecko) {
             $formattedPrice = "Rp " . number_format($gecko->price, 0, ',', '.');
             
@@ -27,10 +25,37 @@ class GeckoController extends Controller
             $gecko->wa_link = "https://wa.me/" . $this->phoneAdmin . "?text=" . urlencode($message);
         }
 
+        return $geckos;
+    }
+
+    public function index()
+    {
+        $allGeckos = Gecko::latest()->get();
+        $totalGeckos = $allGeckos->count();
+
+        // Ambil produk yang dipilih admin untuk tampil di Landing Page (is_featured = true)
+        $featuredGeckos = Gecko::where('is_featured', true)->latest()->get();
+
+        // Fallback: Jika admin belum memilih produk sama sekali, tampilkan 4 gecko terbaru
+        if ($featuredGeckos->isEmpty()) {
+            $featuredGeckos = $allGeckos->take(4);
+        }
+
+        $geckos = $this->attachWaLinks($featuredGeckos);
+
         // HANYA AMBIL TESTIMONI YANG SUDAH DISETUJUI ADMIN (is_approved = true)
         $testimonials = Testimonial::where('is_approved', true)->latest()->get();
 
-        return view('landing', compact('geckos', 'testimonials'));
+        return view('landing', compact('geckos', 'totalGeckos', 'testimonials'));
+    }
+
+    public function catalog()
+    {
+        $allGeckos = Gecko::latest()->get();
+        $geckos = $this->attachWaLinks($allGeckos);
+        $totalGeckos = $allGeckos->count();
+
+        return view('katalog', compact('geckos', 'totalGeckos'));
     }
 
     public function show(Gecko $gecko)
