@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gecko;
-use App\Models\Testimonial; // <-- 1. IMPORT MODEL TESTIMONIAL
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class GeckoController extends Controller
@@ -27,10 +27,9 @@ class GeckoController extends Controller
             $gecko->wa_link = "https://wa.me/" . $this->phoneAdmin . "?text=" . urlencode($message);
         }
 
-        // 2. AMBIL DATA TESTIMONI DARI DATABASE
-        $testimonials = Testimonial::latest()->get();
+        // HANYA AMBIL TESTIMONI YANG SUDAH DISETUJUI ADMIN (is_approved = true)
+        $testimonials = Testimonial::where('is_approved', true)->latest()->get();
 
-        // 3. MASUKKAN 'testimonials' KE DALAM COMPACT
         return view('landing', compact('geckos', 'testimonials'));
     }
 
@@ -53,5 +52,28 @@ class GeckoController extends Controller
         $otherGeckos = Gecko::where('id', '!=', $gecko->id)->latest()->take(4)->get();
 
         return view('gecko-detail', compact('gecko', 'waLink', 'otherGeckos'));
+    }
+
+    // FITUR BARU: MENERIMA INPUT TESTIMONI DARI PUBLIK (USER)
+    public function storeTestimonial(Request $request)
+    {
+        $request->validate([
+            'client_name'   => 'required|string|max:255',
+            'city'          => 'nullable|string|max:255',
+            'morph_adopted' => 'nullable|string|max:255',
+            'review'        => 'required|string',
+            'rating'        => 'required|integer|min:1|max:5',
+        ]);
+
+        Testimonial::create([
+            'client_name'   => $request->client_name,
+            'city'          => $request->city,
+            'morph_adopted' => $request->morph_adopted,
+            'review'        => $request->review,
+            'rating'        => $request->rating,
+            'is_approved'   => false, // Otomatis pending (menunggu persetujuan admin)
+        ]);
+
+        return back()->with('success_testi', 'Terima kasih! Ulasan Anda telah dikirim dan sedang ditinjau oleh admin.');
     }
 }

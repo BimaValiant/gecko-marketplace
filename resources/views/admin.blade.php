@@ -221,10 +221,10 @@
 <div class="mt-12 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm space-y-6">
     <div>
         <h2 class="text-xl font-bold text-slate-900">Kelola Testimoni Pembeli</h2>
-        <p class="text-xs text-slate-500">Tambah ulasan kepuasan pelanggan untuk ditampilkan di Landing Page.</p>
+        <p class="text-xs text-slate-500">Setujui ulasan dari pembeli publik atau tambah ulasan manual dari chat WhatsApp.</p>
     </div>
 
-    <!-- Form Tambah Testimoni -->
+    <!-- Form Tambah Testimoni Manual oleh Admin -->
     <form action="{{ route('admin.testimonials.store') }}" method="POST" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100">
         @csrf
         <div>
@@ -244,6 +244,7 @@
             <select name="rating" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
                 <option value="5">⭐⭐⭐⭐⭐ (5 Bintang)</option>
                 <option value="4">⭐⭐⭐⭐ (4 Bintang)</option>
+                <option value="3">⭐⭐⭐ (3 Bintang)</option>
             </select>
         </div>
         <div class="sm:col-span-2 lg:col-span-3">
@@ -266,6 +267,7 @@
                     <th class="py-3 px-2">Kota</th>
                     <th class="py-3 px-2">Morph</th>
                     <th class="py-3 px-2">Ulasan</th>
+                    <th class="py-3 px-2 text-center">Status</th>
                     <th class="py-3 px-2 text-right">Aksi</th>
                 </tr>
             </thead>
@@ -276,17 +278,40 @@
                     <td class="py-3 px-2 text-slate-500">{{ $item->city ?? '-' }}</td>
                     <td class="py-3 px-2 font-semibold text-emerald-600">{{ $item->morph_adopted ?? '-' }}</td>
                     <td class="py-3 px-2 text-slate-600 max-w-xs truncate">{{ $item->review }}</td>
+                    <td class="py-3 px-2 text-center">
+                        @if($item->is_approved)
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                Dipajang
+                            </span>
+                        @else
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200">
+                                Pending
+                            </span>
+                        @endif
+                    </td>
                     <td class="py-3 px-2 text-right">
-                        <form action="{{ route('admin.testimonials.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus testimoni ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold text-xs">Hapus</button>
-                        </form>
+                        <div class="flex items-center justify-end gap-2">
+                            <!-- Tombol Setujui / Sembunyikan -->
+                            <form action="{{ route('admin.testimonials.toggle', $item->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="px-2.5 py-1 rounded-lg text-xs font-bold transition {{ $item->is_approved ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm' }}">
+                                    {{ $item->is_approved ? 'Sembunyikan' : '✓ Setujui' }}
+                                </button>
+                            </form>
+
+                            <!-- Tombol Hapus -->
+                            <form action="{{ route('admin.testimonials.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus testimoni ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-rose-600 hover:text-rose-800 font-bold text-xs p-1">Hapus</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="py-6 text-center text-slate-400 italic">Belum ada testimoni. Tambahkan testimoni pertamamu di atas!</td>
+                    <td colspan="6" class="py-6 text-center text-slate-400 italic">Belum ada testimoni. Masukkan testimoni manual di atas atau tunggu kiriman ulasan dari pengunjung website.</td>
                 </tr>
                 @endforelse
             </tbody>

@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\GeckoAdminController;
 Route::get('/', [GeckoController::class, 'index'])->name('landing');
 Route::get('/gecko/{gecko}', [GeckoController::class, 'show'])->name('gecko.show');
 
+// Route Kirim Testimoni Publik dari User
+Route::post('/testimonial/store', [GeckoController::class, 'storeTestimonial'])->name('testimonial.public.store');
+
 // Route Auth / Login (Mencegah Error Route [login] not defined)
 Route::get('/login', [GeckoAdminController::class, 'loginView'])->name('login');
 Route::post('/login', [GeckoAdminController::class, 'authenticate'])->name('login.post');
@@ -20,7 +23,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/geckos/{gecko}', [GeckoAdminController::class, 'update'])->name('update');
     Route::delete('/geckos/{gecko}', [GeckoAdminController::class, 'destroy'])->name('destroy');
     
-    // Testimonials Routes
+    // Testimonial Admin Routes
     Route::post('/testimonials', [GeckoAdminController::class, 'storeTestimonial'])->name('testimonials.store');
+    Route::patch('/testimonials/{id}/toggle', [GeckoAdminController::class, 'toggleTestimonial'])->name('testimonials.toggle');
     Route::delete('/testimonials/{id}', [GeckoAdminController::class, 'destroyTestimonial'])->name('testimonials.destroy');
 });

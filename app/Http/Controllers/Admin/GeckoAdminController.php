@@ -196,4 +196,15 @@ class GeckoAdminController extends Controller
 
         return back()->with('success', 'Testimoni berhasil dihapus!');
     }
+
+    // Toggle Status Approval Testimoni (Setujui / Sembunyikan)
+public function toggleTestimonial($id)
+{
+    $testimonial = Testimonial::findOrFail($id);
+    $testimonial->is_approved = !$testimonial->is_approved;
+    $testimonial->save();
+
+    $statusMsg = $testimonial->is_approved ? 'ditampilkan di Landing Page!' : 'disembunyikan dari Landing Page.';
+    return back()->with('success', 'Status testimoni berhasil ' . $statusMsg);
+}
 }

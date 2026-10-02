@@ -15,6 +15,10 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
+
+    <!-- AOS ANIMATION CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Preview Card Pas Share ke WhatsApp & Medsos -->
     <meta property="og:title" content="Valiant Exotics - Koleksi Leopard Gecko Berkualitas">
     <meta property="og:description" content="Breeding with intention. Temukan Leopard Gecko & AFT berkualitas, sehat, dan terawat dengan Garansi Live Arrival 100%.">
@@ -23,13 +27,13 @@
 </head>
 <body class="bg-[#f8fafc] text-slate-800 antialiased selection:bg-emerald-500 selection:text-white overflow-x-hidden relative">
 
-    <!-- NAVBAR RESPONSIF FLUID -->
-    <header class="w-full bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 md:h-24 flex items-center justify-between">
+    <!-- NAVBAR RESPONSIF FLUID (DENGAN EFEK DINAMIS SCROLL) -->
+    <header id="mainHeader" class="w-full bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 transition-all duration-300 shadow-sm">
+        <div id="headerContainer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 md:h-24 flex items-center justify-between transition-all duration-300">
             
             <!-- Logo & Nama Brand -->
             <a href="{{ route('landing') }}" class="flex items-center gap-2.5 sm:gap-3.5 group">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0">
+                <div id="logoBox" class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center flex-shrink-0 transition-all duration-300">
                     <img src="{{ asset('LOGOGECKOFINAL.png') }}" alt="Valiant Exotics Logo" class="w-full h-full object-contain group-hover:scale-105 transition duration-200">
                 </div>
                 <div class="flex flex-col">
@@ -47,7 +51,7 @@
             </nav>
 
             <!-- Aksi Kanan (Desktop WA & Hamburger Mobile) -->
-            <a href="https://wa.me/6285923568144?text=Halo%20Admin%20Valiant%20Exotics" target="_blank" class="hidden sm:flex px-4 py-2.5 sm:px-6 sm:py-3 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-700 transition items-center gap-2 shadow-md shadow-emerald-600/20 flex-shrink-0">
+            <a href="https://wa.me/6285923568144?text=Halo%20Admin%20Valiant%20Exotics" target="_blank" class="hidden sm:flex px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-semibold hover:bg-emerald-700 transition items-center gap-2 shadow-md shadow-emerald-600/20 flex-shrink-0">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                 Hubungi Kami
             </a>
@@ -74,7 +78,7 @@
 
     <!-- HERO SECTION RESPONSIF -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-20 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
-        <div class="md:col-span-7 space-y-5 sm:space-y-6 text-center md:text-left">
+        <div class="md:col-span-7 space-y-5 sm:space-y-6 text-center md:text-left" data-aos="fade-right">
             <div class="inline-flex items-center gap-2 justify-center md:justify-start">
                 <span class="h-px w-6 sm:w-8 bg-emerald-500"></span>
                 <span class="text-[11px] sm:text-xs font-bold tracking-widest text-emerald-600 uppercase">Breeding with intention</span>
@@ -96,7 +100,7 @@
             </div>
 
             <!-- STATS -->
-            <div class="pt-6 sm:pt-8 border-t border-slate-200 grid grid-cols-3 gap-3 sm:gap-6 max-w-md mx-auto md:mx-0">
+            <div class="pt-6 sm:pt-8 border-t border-slate-200 grid grid-cols-3 gap-3 sm:gap-6 max-w-md mx-auto md:mx-0" data-aos="fade-up" data-aos-delay="150">
                 <div>
                     <span class="block text-lg sm:text-2xl font-extrabold text-slate-900">1+</span>
                     <span class="text-[10px] sm:text-xs font-medium text-slate-500">tahun pengalaman</span>
@@ -113,7 +117,7 @@
         </div>
 
         <!-- FEATURED CARD -->
-        <div class="md:col-span-5 relative max-w-md mx-auto md:max-w-none w-full">
+        <div class="md:col-span-5 relative max-w-md mx-auto md:max-w-none w-full" data-aos="fade-left">
             <div class="relative rounded-3xl overflow-hidden shadow-xl bg-slate-200 aspect-[4/5] sm:aspect-square md:aspect-[4/5] border border-slate-100">
                 <img src="https://community.morphmarket.com/uploads/db1442/original/3X/2/1/21b5fdab97e71256d528504c382e701f080553c5.jpeg" alt="Featured Gecko" class="w-full h-full object-cover">
                 <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto bg-white/95 backdrop-blur-md px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl shadow-lg border border-slate-100">
@@ -126,7 +130,7 @@
 
     <!-- KATALOG SECTION -->
     <section id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-3 sm:gap-4 text-center md:text-left">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-3 sm:gap-4 text-center md:text-left" data-aos="fade-up">
             <div>
                 <span class="text-[11px] sm:text-xs font-bold tracking-widest text-emerald-600 uppercase">The Collection</span>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mt-1">Katalog pilihan</h2>
@@ -137,7 +141,7 @@
         </div>
 
         <!-- SEARCH, FILTER & TOGGLE READY STOCK -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-8 items-stretch sm:items-center">
+        <div class="flex flex-col sm:flex-row gap-3 mb-8 items-stretch sm:items-center" data-aos="fade-up" data-aos-delay="100">
             <div class="relative flex-1">
                 <svg class="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 <input type="text" id="searchInput" placeholder="Cari morph atau nama..." class="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-white rounded-2xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
@@ -151,12 +155,12 @@
                     <option value="{{ $m }}">{{ $m }}</option>
                 @endforeach
             </select>
-            <!-- FITUR BARU: DROPDOWN URUTKAN HARGA -->
-    <select id="sortFilter" class="px-4 py-2.5 sm:py-3 bg-white rounded-2xl border border-slate-200 text-xs sm:text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
-        <option value="default">Urutkan: Terbaru</option>
-        <option value="price-asc">Harga: Terendah ke Tinggi</option>
-        <option value="price-desc">Harga: Tertinggi ke Rendah</option>
-    </select>
+            <!-- DROPDOWN URUTKAN HARGA -->
+            <select id="sortFilter" class="px-4 py-2.5 sm:py-3 bg-white rounded-2xl border border-slate-200 text-xs sm:text-sm font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition">
+                <option value="default">Urutkan: Terbaru</option>
+                <option value="price-asc">Harga: Terendah ke Tinggi</option>
+                <option value="price-desc">Harga: Tertinggi ke Rendah</option>
+            </select>
             <!-- TOGGLE READY STOCK -->
             <button id="readyToggleBtn" type="button" class="px-4 py-2.5 sm:py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2 select-none">
                 <span id="readyIndicator" class="w-2.5 h-2.5 rounded-full bg-slate-300 transition-colors"></span>
@@ -173,10 +177,12 @@
                 $status = $gecko['status'] ?? $gecko->status;
             @endphp
             <div class="gecko-card bg-white rounded-3xl p-3 border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between"
-     data-name="{{ strtolower($codeName) }}" 
-     data-morph="{{ strtolower($morph) }}"
-     data-status="{{ strtolower($status) }}"
-     data-price="{{ $gecko['price'] ?? $gecko->price }}">
+                 data-aos="fade-up"
+                 data-aos-delay="{{ ($loop->index % 4) * 100 }}"
+                 data-name="{{ strtolower($codeName) }}" 
+                 data-morph="{{ strtolower($morph) }}"
+                 data-status="{{ strtolower($status) }}"
+                 data-price="{{ $gecko['price'] ?? $gecko->price }}">
                 <div>
                     <!-- Link Gambar Ratio Rapi & Seragam -->
                     <a href="{{ route('gecko.show', $gecko['id'] ?? $gecko->id) }}" class="block relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100 mb-3 sm:mb-4 group">
@@ -229,7 +235,7 @@
     <!-- PROMISE SECTION -->
     <section id="perawatan" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
-            <div class="md:col-span-5 space-y-2 sm:space-y-3 text-center md:text-left">
+            <div class="md:col-span-5 space-y-2 sm:space-y-3 text-center md:text-left" data-aos="fade-right">
                 <span class="text-[11px] sm:text-xs font-bold tracking-widest text-emerald-600 uppercase">Our Promise</span>
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
                     Tenang memilih, nyaman memelihara.
@@ -240,7 +246,7 @@
             </div>
 
             <div class="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm">
+                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
@@ -248,7 +254,7 @@
                     <p class="text-xs text-slate-500 leading-relaxed">Dokumentasi jelas dan pengiriman aman untuk hewan hidup.</p>
                 </div>
 
-                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm">
+                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm" data-aos="fade-up" data-aos-delay="200">
                     <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
@@ -256,7 +262,7 @@
                     <p class="text-xs text-slate-500 leading-relaxed">Breeding terencana dengan lineage dan kesehatan terpaut.</p>
                 </div>
 
-                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm">
+                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-100 space-y-2 sm:space-y-3 shadow-sm" data-aos="fade-up" data-aos-delay="300">
                     <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     </div>
@@ -267,18 +273,30 @@
         </div>
     </section>
 
-    <!-- SECTION TESTIMONI PEMBELI (DINAMIS DARI ADMIN) -->
-    @if(isset($testimonials) && count($testimonials) > 0)
+<!-- SECTION TESTIMONI PEMBELI -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 border-t border-slate-200/60">
-        <div class="text-center space-y-2 mb-10">
+        <div class="text-center space-y-2 mb-10" data-aos="fade-up">
             <span class="text-[11px] sm:text-xs font-bold tracking-widest text-emerald-600 uppercase">Testimonials</span>
             <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Kata Mereka yang Sudah Mengadopsi</h2>
             <p class="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto">Kepuasan dan kebahagiaan para adopter saat menerima koleksi gecko dari Valiant Exotics.</p>
+            
+            <!-- Tombol Buka Modal Tulis Ulasan -->
+            <div class="pt-3">
+                <button type="button" onclick="openTestiModal()" class="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-sm inline-flex items-center gap-2">
+                    ✍️ Tulis Ulasan Kamu
+                </button>
+            </div>
         </div>
 
+        @if(session('success_testi'))
+        <div class="max-w-xl mx-auto mb-8 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium text-center">
+            {{ session('success_testi') }}
+        </div>
+        @endif
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($testimonials as $testi)
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-4 flex flex-col justify-between">
+            @forelse($testimonials as $testi)
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-4 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 3) * 100 }}">
                 <div class="space-y-3">
                     <!-- Rating Bintang -->
                     <div class="flex items-center gap-1 text-amber-400 text-sm">
@@ -305,11 +323,81 @@
                     @endif
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-span-full text-center py-8 text-slate-400 italic text-xs">
+                Belum ada ulasan yang dipajang. Klik tombol di atas untuk jadi yang pertama memberi ulasan!
+            </div>
+            @endforelse
         </div>
     </section>
-    @endif
 
+    <!-- Floating WA Button Kiri Bawah -->
+    <a href="https://wa.me/6285923568144?text=Halo%20Admin%20Valiant%20Exotics" target="_blank" class="fixed bottom-6 left-6 z-40 p-3.5 rounded-full bg-emerald-500 text-white shadow-2xl hover:bg-emerald-600 transition duration-300 flex items-center justify-center border border-emerald-400/50">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    </a>
+
+    <!-- MODAL FORM TULIS TESTIMONI PUBLIK -->
+    <div id="testiModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="font-extrabold text-slate-900 text-base">Tulis Ulasan Adopsi</h3>
+                <button type="button" onclick="closeTestiModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+            </div>
+
+            <form action="{{ route('testimonial.public.store') }}" method="POST" class="space-y-3 text-xs">
+                @csrf
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Nama Kamu *</label>
+                    <input type="text" name="client_name" required placeholder="Contoh: Dimas R." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Kota / Lokasi</label>
+                        <input type="text" name="city" placeholder="Purwokerto" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Morph yang Diadopsi</label>
+                        <input type="text" name="morph_adopted" placeholder="DB Raptor" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Rating Bintang *</label>
+                    <select name="rating" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none bg-white">
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Bintang)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 Bintang)</option>
+                        <option value="3">⭐⭐⭐ (3 Bintang)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">Isi Ulasan / Pengalaman *</label>
+                    <textarea name="review" required rows="3" placeholder="Ceritakan kondisi gecko saat sampai, respon admin, dll..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeTestiModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold">Kirim Ulasan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT KHUSUS MODAL TESTIMONI -->
+    <script>
+        function openTestiModal() {
+            const modal = document.getElementById('testiModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            }
+        }
+
+        function closeTestiModal() {
+            const modal = document.getElementById('testiModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+    </script>
     <!-- Floating WA Button Kiri Bawah -->
     <a href="https://wa.me/6285923568144?text=Halo%20Admin%20Valiant%20Exotics" target="_blank" class="fixed bottom-6 left-6 z-40 p-3.5 rounded-full bg-emerald-500 text-white shadow-2xl hover:bg-emerald-600 transition duration-300 flex items-center justify-center border border-emerald-400/50">
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
@@ -317,13 +405,13 @@
 
     <!-- SECTION FAQ & SYARAT GARANSI -->
     <section id="faq" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div class="text-center space-y-2 mb-8">
+        <div class="text-center space-y-2 mb-8" data-aos="fade-up">
             <span class="text-[11px] sm:text-xs font-bold tracking-widest text-emerald-600 uppercase">Information Center</span>
             <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">FAQ & Syarat Garansi</h2>
             <p class="text-xs sm:text-sm text-slate-500">Hal penting seputar transaksi, pengiriman, dan pemeliharaan di Valiant Exotics.</p>
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-3" data-aos="fade-up" data-aos-delay="100">
             
             <!-- FAQ 1: Alur Pemesanan -->
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
@@ -462,7 +550,7 @@
         </div>
     </section>
 
-   <!-- FOOTER RESPONSIF -->
+    <!-- FOOTER RESPONSIF (TANPA FLICKER / NGEBLINK) -->
     <footer id="kontak" class="bg-[#0b1329] text-slate-400 py-10 sm:py-14 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             
@@ -500,7 +588,7 @@
             <!-- Kanan: Info Lokasi & Garansi -->
             <div class="space-y-2 text-xs text-center md:text-right">
                 <p class="flex items-center justify-center md:justify-end gap-2">
-                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     Purwokerto, Banyumas, Jawa Tengah, Indonesia
                 </p>
                 <p class="flex items-center justify-center md:justify-end gap-2 text-slate-400">
@@ -514,6 +602,7 @@
             <p>© {{ date('Y') }} Valiant Exotics. Live arrival guarantee berlaku sesuai syarat.</p>
         </div>
     </footer>
+
     <!-- MODAL PANDUAN PERAWATAN (CARE SHEET) -->
     <div id="careModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden transform transition-all scale-95 opacity-0" id="careModalBox">
@@ -584,7 +673,13 @@
                     Mengerti & Tutup
                 </button>
             </div>
+        </div>
+    </div>  
 
+<script>
+    function openTestiModal() { document.getElementById('testiModal').classList.remove('hidden'); }
+    function closeTestiModal() { document.getElementById('testiModal').classList.add('hidden'); }
+</script>
         </div>
     </div>
 
@@ -593,7 +688,18 @@
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
     </button>
 
-   <!-- SCRIPT INTERAKSI -->
+    <!-- AOS ANIMATION JS (DENGAN RE-ANIMATE PAS SCROLL KE ATAS) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true, // Memutar animasi kembali saat di-scroll balik ke atas!
+            offset: 120
+        });
+    </script>
+
+    <!-- SCRIPT INTERAKSI & DYNAMIC HEADER SCROLL -->
     <script>
         function openCareModal() {
             const modal = document.getElementById('careModal');
@@ -626,6 +732,27 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            // Header Dynamic Shrink Animasi Pas Di-Scroll
+            const mainHeader = document.getElementById('mainHeader');
+            const headerContainer = document.getElementById('headerContainer');
+            const logoBox = document.getElementById('logoBox');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 40) {
+                    mainHeader.classList.add('shadow-md', 'bg-white/95');
+                    headerContainer.classList.remove('h-16', 'sm:h-20', 'md:h-24');
+                    headerContainer.classList.add('h-14', 'sm:h-16', 'md:h-16');
+                    logoBox.classList.remove('w-10', 'h-10', 'sm:w-12', 'sm:h-12', 'md:w-14', 'md:h-14');
+                    logoBox.classList.add('w-8', 'h-8', 'sm:w-10', 'sm:h-10', 'md:w-10', 'md:h-10');
+                } else {
+                    mainHeader.classList.remove('shadow-md', 'bg-white/95');
+                    headerContainer.classList.remove('h-14', 'sm:h-16', 'md:h-16');
+                    headerContainer.classList.add('h-16', 'sm:h-20', 'md:h-24');
+                    logoBox.classList.remove('w-8', 'h-8', 'sm:w-10', 'sm:h-10', 'md:w-10', 'md:h-10');
+                    logoBox.classList.add('w-10', 'h-10', 'sm:w-12', 'sm:h-12', 'md:w-14', 'md:h-14');
+                }
+            });
+
             // Hamburger Mobile Menu Toggle
             const menuBtn = document.getElementById('menuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
