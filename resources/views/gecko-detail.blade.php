@@ -152,7 +152,10 @@
                      class="w-full h-full object-contain p-2" draggable="false">
 
                 <!-- Status badge -->
-                <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wider text-white backdrop-blur-sm {{ $gecko->status === 'READY STOCK' ? 'bg-emerald-500/90 border border-emerald-400/30' : 'bg-slate-900/80 border border-white/15' }}">
+                <span class="absolute top-4 left-4 px-3.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wider text-white backdrop-blur-sm 
+                    @if($gecko->status === 'READY STOCK') bg-emerald-500/90 border border-emerald-400/30
+                    @elseif($gecko->status === 'LOCKED') bg-amber-500/90 border border-amber-400/30
+                    @else bg-slate-900/80 border border-white/15 @endif">
                     {{ $gecko->status }}
                 </span>
 
@@ -256,11 +259,16 @@
             <!-- CTAs -->
             <div class="space-y-3 pt-1">
                 @if($gecko->status === 'READY STOCK')
-                <a href="{{ $waLink }}" target="_blank" rel="noopener noreferrer"
-                   class="btn-wa w-full py-4 px-5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-3">
-                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                    Pesan via WhatsApp
-                </a>
+                <button type="button" onclick="document.getElementById('bookingModal').classList.remove('hidden')"
+                        class="btn-wa w-full py-4 px-5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/20 active:scale-95 transition">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    Adopt / Booking Gecko Ini
+                </button>
+                @elseif($gecko->status === 'LOCKED')
+                <button disabled class="w-full py-4 px-5 rounded-2xl bg-amber-50 text-amber-700 font-bold text-sm cursor-not-allowed border border-amber-200 flex items-center justify-center gap-3">
+                    <svg class="w-5 h-5 text-amber-500 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Dalam Proses Adopsi (Locked)
+                </button>
                 @else
                 <button disabled class="w-full py-4 px-5 rounded-2xl bg-slate-100 text-slate-400 font-bold text-sm cursor-not-allowed border border-slate-200 flex items-center justify-center gap-3">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
@@ -286,6 +294,63 @@
         </div>
     </div>
 
+<!-- ══════════════════════════════════════════════════════════
+     POP-UP / MODAL SUKSES BOOKING
+═══════════════════════════════════════════════════════════ -->
+@if(session('success'))
+<div id="successModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl relative border border-slate-100 transition-all">
+        
+        <!-- Icon Centang Hijau -->
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-emerald-50">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+            </svg>
+        </div>
+
+        <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Permintaan Diterima</span>
+        <h3 class="text-xl font-black text-slate-900 leading-tight">Terima Kasih!</h3>
+        
+        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+            Stok Gecko ini berhasil dikunci (LOCKED) khusus untuk kamu.
+        </p>
+
+        <!-- Box Informasi Selanjutnya -->
+        <div class="mt-4 p-3.5 bg-emerald-50 rounded-2xl border border-emerald-100 text-left text-xs text-emerald-900 space-y-1">
+            <p class="font-bold flex items-center gap-1.5">
+                <span>📲</span> Langkah Selanjutnya:
+            </p>
+            <p class="text-[11px] text-emerald-800 leading-snug">
+                Admin <strong>Valiant Exotics</strong> akan segera mengecek biaya ongkir ke kotamu, lalu menghubungi nomor WhatsApp kamu.
+            </p>
+        </div>
+
+        <!-- Tombol Tutup -->
+        <button type="button" onclick="document.getElementById('successModal').remove()" 
+                class="mt-6 w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-extrabold text-xs shadow-lg shadow-emerald-500/25 transition">
+            Siap, Saya Tunggu Chat WA!
+        </button>
+    </div>
+</div>
+@endif
+
+@if(session('error'))
+<div id="errorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl relative border border-slate-100">
+        <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-rose-50">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </div>
+        <h3 class="text-xl font-black text-slate-900">Gagal Booking</h3>
+        <p class="text-xs text-slate-600 mt-2 leading-relaxed">{{ session('error') }}</p>
+        <button type="button" onclick="document.getElementById('errorModal').remove()" 
+                class="mt-6 w-full py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 active:scale-95 text-white font-extrabold text-xs transition">
+            Tutup
+        </button>
+    </div>
+</div>
+@endif
 
     <!-- ── RELATED GECKOS ── -->
     @if(count($otherGeckos) > 0)
@@ -346,7 +411,6 @@
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
 </button>
 
-
 <!-- FOOTER -->
 <footer id="kontak" class="bg-[#0b1329] text-slate-400 pt-14 pb-10 border-t border-white/[0.06]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -389,6 +453,54 @@
         </div>
     </div>
 </footer>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL FORM BOOKING (SOLUSI 1)
+═══════════════════════════════════════════════════════════ -->
+<div id="bookingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl relative border border-slate-100">
+        <!-- Close Button -->
+        <button type="button" onclick="document.getElementById('bookingModal').classList.add('hidden')" 
+                class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold flex items-center justify-center transition">
+            &times;
+        </button>
+        
+        <div class="mb-5">
+            <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Form Adopsi Gecko</span>
+            <h3 class="text-lg font-black text-slate-900 leading-tight">Lengkapi Lokasi Pengiriman</h3>
+            <p class="text-xs text-slate-500 mt-1">Stok akan dikunci sementara. Admin akan mengecek ongkir & packing terbaik untuk lokasi Anda.</p>
+        </div>
+
+        <form action="{{ route('gecko.book', $gecko->id) }}" method="POST" class="space-y-3.5">
+            @csrf
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap Adopter</label>
+                <input type="text" name="buyer_name" required placeholder="Contoh: Bima Valiant" 
+                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">No. WhatsApp Active</label>
+                <input type="text" name="buyer_phone" required placeholder="Contoh: 081234567890" 
+                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Kota / Kabupaten Tujuan</label>
+                <input type="text" name="destination_city" required placeholder="Contoh: Surabaya / Medan / Semarang" 
+                       class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Alamat Lengkap Pengiriman</label>
+                <textarea name="shipping_address" required rows="2" placeholder="Jl. Raya No. 123, Kecamatan, Kode Pos..." 
+                          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition"></textarea>
+            </div>
+            <button type="submit" 
+                    class="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs shadow-lg transition active:scale-95 mt-2 flex items-center justify-center gap-2">
+                <span>Kirim Permintaan Booking</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+        </form>
+    </div>
+</div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>

@@ -29,4 +29,9 @@ class Gecko extends Model
         'images' => 'array',
         'is_featured' => 'boolean',
     ];
+
+    public function orders()
+{
+    return $this->hasMany(Order::class);
+}
 }
