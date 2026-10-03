@@ -99,4 +99,36 @@ class AdminOrderController extends Controller
 
     return redirect()->back()->with('success', 'Order lunas & status Gecko otomatis TERJUAL!');
 }
+
+// Batalkan Order & Balikkan Stok Gecko jadi READY STOCK
+public function cancelOrder($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Jika gecko masih dikunci oleh order ini, kembalikan ke READY STOCK
+    if ($order->gecko && $order->gecko->status === 'LOCKED') {
+        $order->gecko->update(['status' => 'READY STOCK']);
+    }
+
+    $order->update(['status' => 'CANCELLED']);
+
+    return redirect()->back()->with('success', "Pesanan #{$order->order_code} berhasil dibatalkan & gecko kembali READY STOCK!");
+}
+
+// Hapus Permanen Record Order
+public function destroy($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Jika statusnya masih LOCKED/PENDING, kembalikan stok gecko dulu sebelum dihapus
+    if ($order->gecko && $order->gecko->status === 'LOCKED') {
+        $order->gecko->update(['status' => 'READY STOCK']);
+    }
+
+    $order->delete();
+
+    return redirect()->back()->with('success', "Order berhasil dihapus permanen!");
+}
+
+
 }

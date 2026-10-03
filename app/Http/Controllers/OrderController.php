@@ -7,6 +7,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -46,6 +48,45 @@ class OrderController extends Controller
                     'locked_until'     => now()->addHours(24),
                 ]);
             });
+
+            // ══════════════════════════════════════════════════════════
+            // KIRIM NOTIFIKASI OTOMATIS KE TELEGRAM ADMIN
+            // ══════════════════════════════════════════════════════════
+            try {
+                // Muat relasi gecko agar $order->gecko tidak null
+                $order->load('gecko');
+
+                $botToken = config('services.telegram.bot_token');
+                $chatId   = config('services.telegram.chat_id');
+
+                if ($botToken && $chatId) {
+                    $morphName = $order->gecko ? $order->gecko->morph : 'Gecko';
+
+                    $teleMessage = "🔔 <b>ADA PESANAN ADOPSI BARU!</b>\n\n"
+                        . "🦎 <b>Gecko:</b> {$morphName} (#GECKO-{$order->gecko_id})\n"
+                        . "🏷️ <b>Harga Gecko:</b> Rp " . number_format($order->gecko_price, 0, ',', '.') . "\n"
+                        . "📦 <b>Kode Order:</b> #{$order->order_code}\n\n"
+                        . "👤 <b>Pembeli:</b> {$order->buyer_name}\n"
+                        . "📞 <b>No WA:</b> {$order->buyer_phone}\n"
+                        . "📍 <b>Tujuan:</b> {$order->destination_city}\n"
+                        . "🏠 <b>Alamat:</b> {$order->shipping_address}\n\n"
+                        . "👉 <i>Segera buka Admin Dashboard untuk set ongkir!</i>";
+
+                    $response = Http::post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+                        'chat_id'    => $chatId,
+                        'text'       => $teleMessage,
+                        'parse_mode' => 'HTML',
+                    ]);
+
+                    if (!$response->successful()) {
+                        Log::error('Telegram API Failure: ' . $response->body());
+                    }
+                } else {
+                    Log::error('Telegram Token / Chat ID tidak ditemukan di config.');
+                }
+            } catch (\Exception $e) {
+                Log::error('Telegram Bot Error: ' . $e->getMessage());
+            }
 
             return redirect()->back()->with('success', 'Permintaan booking berhasil! Admin akan mengecek ongkir terbaik dan mengontak WhatsApp Anda.');
 

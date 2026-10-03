@@ -6,12 +6,6 @@ return [
     |--------------------------------------------------------------------------
     | Third Party Services
     |--------------------------------------------------------------------------
-    |
-    | This file is for storing the credentials for third party services such
-    | as Mailgun, Postmark, AWS and more. This file provides the de facto
-    | location for this type of information, allowing packages to have
-    | a conventional file to locate the various service credentials.
-    |
     */
 
     'mailgun' => [
@@ -32,9 +26,14 @@ return [
     ],
 
     'midtrans' => [
-    'server_key'    => env('MIDTRANS_SERVER_KEY'),
-    'client_key'    => env('MIDTRANS_CLIENT_KEY'),
-    'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
-],
+        'server_key'    => env('MIDTRANS_SERVER_KEY'),
+        'client_key'    => env('MIDTRANS_CLIENT_KEY'),
+        'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
+    ], // <-- Tutup array midtrans di sini!
+
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id'   => env('TELEGRAM_CHAT_ID'),
+    ],
 
 ];
